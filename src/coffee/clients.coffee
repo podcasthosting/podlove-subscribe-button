@@ -39,6 +39,13 @@ class Clients
 
   cloud: [
     {
+        title: 'podcast.de'
+        scheme: 'https://www.podcast.de/abonnieren?url='
+        icon: 'cloud/podcastde.png'
+        register: 'https://www.podcast.de/'
+        http: true
+    },
+    {
       title: 'gpodder.net'
       scheme: 'http://gpodder.net/subscribe?url='
       icon: 'cloud/gpoddernet.png'
@@ -58,13 +65,6 @@ class Clients
       icon: 'cloud/pocketcasts.png'
       register: 'https://play.pocketcasts.com/'
       encodePath: false
-    },
-    {
-      title: 'podcast.de'
-      scheme: 'https://www.podcast.de/abonnieren?url='
-      icon: 'cloud/podcastde.png'
-      register: 'https://www.podcast.de/'
-      http: true
     }
   ]
 
