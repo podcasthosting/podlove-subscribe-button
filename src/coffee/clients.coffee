@@ -58,6 +58,13 @@ class Clients
       icon: 'cloud/pocketcasts.png'
       register: 'https://play.pocketcasts.com/'
       encodePath: false
+    },
+    {
+      title: 'podcast.de'
+      scheme: 'http://www.podcast.de/abonnieren?url='
+      icon: 'cloud/podcastde.png'
+      register: 'https://www.podcast.de/'
+      http: true
     }
   ]
 
