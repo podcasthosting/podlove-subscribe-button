@@ -103,8 +103,6 @@ class ClientsPanel extends Panel
       else
         client.url = prepareURL feed.url,client.scheme,client.http,client.encodeHttp,client.encodePath
 
-    _(@cloudClients).shuffle()
-
     Utils.fixIconPath(@osDefault, pathPrefix)
     @osDefault.title = @parent.I18n.t('clients_panel.let_device_decide')
     @osDefault.originalUrl = feed.url
