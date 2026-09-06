@@ -28,6 +28,12 @@
     "tinycolor2": "^1.4.2",
     "underscore": "^1.13.1"
   },
+  "resolutions": {
+    "websocket-driver": "^0.7.4"
+  },
+  "overrides": {
+    "websocket-driver": "^0.7.4"
+  },
   "engines": {
     "node": ">=8.9.4",
     "yarn": ">=1.1.0"

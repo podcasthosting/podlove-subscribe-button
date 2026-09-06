@@ -8,10 +8,22 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     browserify = require('gulp-browserify'),
     rename = require('gulp-rename'),
-    connect = require('gulp-connect'),
     sourcemaps = require('gulp-sourcemaps'),
     autoprefixer = require('gulp-autoprefixer'),
-    gzip = require('gulp-gzip');
+    gzip = require('gulp-gzip'),
+    PassThrough = require('stream').PassThrough;
+
+// gulp-connect wird ausschliesslich vom Dev-Server ('gulp serve') gebraucht. Es zieht
+// ueber tiny-lr/faye-websocket ein altes websocket-driver nach, das mit
+// process.binding('http_parser') auf aktuellen Node-Versionen nicht mehr laedt.
+// Deshalb wird es erst beim Serven geladen; der Build laeuft ohne es durch.
+var serving = false;
+
+function reload() {
+  if (!serving) return new PassThrough({objectMode: true});
+
+  return require('gulp-connect').reload();
+}
 
 var dest = './dist';
 var paths = {
@@ -31,7 +43,7 @@ gulp.task('stylesheets', function() {
     .pipe(gulp.dest('./dist/stylesheets'))
     .pipe(gzip())
     .pipe(gulp.dest('./dist/stylesheets'))
-    .pipe(connect.reload())
+    .pipe(reload())
 })
 
 gulp.task('javascripts', function(done) {
@@ -45,7 +57,7 @@ gulp.task('javascripts', function(done) {
     .pipe(gulp.dest('./dist/javascripts'))
     .pipe(gzip())
     .pipe(gulp.dest('./dist/javascripts'))
-    .pipe(connect.reload())
+    .pipe(reload())
 
    done()
 })
@@ -53,7 +65,7 @@ gulp.task('javascripts', function(done) {
 gulp.task('html', function(done) {
   gulp.src(paths.html)
     .pipe(gulp.dest('./dist'))
-    .pipe(connect.reload())
+    .pipe(reload())
 
   done()
 })
@@ -61,7 +73,7 @@ gulp.task('html', function(done) {
 gulp.task('images', function(done) {
   gulp.src(paths.images)
     .pipe(gulp.dest('./dist/images'))
-    .pipe(connect.reload())
+    .pipe(reload())
 
   done()
 })
@@ -69,7 +81,7 @@ gulp.task('images', function(done) {
 gulp.task('fonts', function(done) {
   gulp.src(paths.fonts)
     .pipe(gulp.dest('./dist/fonts'))
-    .pipe(connect.reload())
+    .pipe(reload())
 
   done()
 })
@@ -93,7 +105,9 @@ gulp.task('watch', function(done) {
 })
 
 gulp.task('connect', function(done) {
-  connect.server({
+  serving = true;
+
+  require('gulp-connect').server({
     root:'./',
     livereload: true
   });
